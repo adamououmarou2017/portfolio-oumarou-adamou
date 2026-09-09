@@ -31,3 +31,6 @@ pnpm-debug.log*
 ~$*
 /CV OUMAROU ADAMOU.pdf
 /photo1.jpg
+
+# Local Netlify folder
+.netlify
