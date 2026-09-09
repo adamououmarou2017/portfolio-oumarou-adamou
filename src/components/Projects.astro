@@ -1,0 +1,65 @@
+---
+import { useTranslations } from '../i18n/utils';
+import type { Lang } from '../i18n/ui';
+import ProjectCard from './ProjectCard.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const projects = [
+  {
+    title: t('project1.title'),
+    desc: t('project1.desc'),
+    tools: lang === 'fr'
+      ? ['Enquête terrain', 'Excel', 'Dashboard HTML', 'PowerPoint']
+      : ['Field survey', 'Excel', 'HTML dashboard', 'PowerPoint'],
+    href: 'https://drive.google.com/drive/folders/1HgG8O7hBrE-Q5bFHnXZO68590VXiCdI-?usp=sharing',
+  },
+  {
+    title: t('project2.title'),
+    desc: t('project2.desc'),
+    tools: lang === 'fr'
+      ? ['Enquête CAP', 'Excel', 'Dashboard', 'Reporting']
+      : ['KAP survey', 'Excel', 'Dashboard', 'Reporting'],
+    href: 'https://drive.google.com/drive/folders/1iksj9k8XAyeY0RnhVahRPfothBV_Epni?usp=sharing',
+  },
+  {
+    title: t('project3.title'),
+    desc: t('project3.desc'),
+    tools: lang === 'fr'
+      ? ['Finance', 'Excel', 'Dashboard', 'Reporting comptable']
+      : ['Finance', 'Excel', 'Dashboard', 'Accounting reporting'],
+    href: 'https://drive.google.com/drive/folders/1_P3t117CxiJiRqhrUHqICx04DrWnY_jg?usp=sharing',
+  },
+];
+---
+
+<section id="projects" class="mx-auto max-w-6xl px-5 py-20 sm:px-8">
+  <div class="max-w-2xl">
+    <span class="text-xs font-semibold uppercase tracking-wide text-accent">{t('projects.kicker')}</span>
+    <h2 class="mt-3 font-display text-3xl font-extrabold leading-tight tracking-tight text-ink sm:text-4xl">
+      {t('projects.title')}
+    </h2>
+    <p class="mt-4 text-base leading-relaxed text-ink-soft">{t('projects.subtitle')}</p>
+  </div>
+
+  <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    {
+      projects.map((p, i) => (
+        <ProjectCard
+          index={i + 1}
+          title={p.title}
+          description={p.desc}
+          tools={p.tools}
+          href={p.href}
+          ctaLabel={t('projects.cta')}
+          toolsLabel={t('projects.tools')}
+        />
+      ))
+    }
+  </div>
+</section>

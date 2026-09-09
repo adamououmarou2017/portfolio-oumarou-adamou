@@ -1,0 +1,133 @@
+---
+import { useTranslations, useTranslatedPath } from '../i18n/utils';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const tp = useTranslatedPath(lang);
+
+const navItems = [
+  { href: '#about', label: t('nav.about') },
+  { href: '#skills', label: t('nav.skills') },
+  { href: '#projects', label: t('nav.projects') },
+  { href: tp('/cv'), label: t('nav.cv') },
+  { href: '#contact', label: t('nav.contact') },
+];
+---
+
+<header class="sticky top-0 z-50 border-b border-ink/5 bg-paper/80 backdrop-blur-md">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 sm:px-8">
+    <a href={tp('/')} class="font-display text-lg font-bold tracking-tight text-ink">
+      Oumarou<span class="text-accent">.</span>Adamou
+    </a>
+
+    <nav class="hidden items-center gap-7 md:flex">
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            class="text-sm font-medium text-ink-soft transition-colors hover:text-accent"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <div class="hidden items-center gap-1 rounded-full border border-ink/10 p-1 text-xs font-semibold sm:flex">
+        <a
+          href="/"
+          class:list={[
+            'rounded-full px-2.5 py-1 transition-colors',
+            lang === 'fr' ? 'bg-ink text-paper' : 'text-ink-soft hover:text-ink',
+          ]}
+        >
+          FR
+        </a>
+        <a
+          href="/en"
+          class:list={[
+            'rounded-full px-2.5 py-1 transition-colors',
+            lang === 'en' ? 'bg-ink text-paper' : 'text-ink-soft hover:text-ink',
+          ]}
+        >
+          EN
+        </a>
+      </div>
+
+      <a
+        href="#contact"
+        class="hidden rounded-full bg-accent px-4 py-2 text-sm font-semibold text-white shadow-sm shadow-accent/30 transition-transform hover:scale-[1.03] hover:bg-accent-strong sm:inline-block"
+      >
+        {t('nav.cta')}
+      </a>
+
+      <button
+        id="menu-toggle"
+        aria-label="Menu"
+        aria-expanded="false"
+        class="grid h-9 w-9 place-items-center rounded-full border border-ink/10 md:hidden"
+      >
+        <svg id="icon-open" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" class="hidden h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="hidden border-t border-ink/5 bg-paper md:hidden">
+    <nav class="flex flex-col gap-1 px-5 py-4">
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            class="rounded-lg px-3 py-2.5 text-sm font-medium text-ink-soft hover:bg-paper-soft hover:text-ink"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+      <div class="mt-2 flex items-center gap-2 px-3">
+        <a href="/" class:list={['rounded-full border px-3 py-1 text-xs font-semibold', lang === 'fr' ? 'border-ink bg-ink text-paper' : 'border-ink/10 text-ink-soft']}>FR</a>
+        <a href="/en" class:list={['rounded-full border px-3 py-1 text-xs font-semibold', lang === 'en' ? 'border-ink bg-ink text-paper' : 'border-ink/10 text-ink-soft']}>EN</a>
+      </div>
+      <a
+        href="#contact"
+        class="mt-3 rounded-full bg-accent px-4 py-2.5 text-center text-sm font-semibold text-white"
+      >
+        {t('nav.cta')}
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('icon-open');
+  const iconClose = document.getElementById('icon-close');
+
+  toggle?.addEventListener('click', () => {
+    const isHidden = menu?.classList.contains('hidden');
+    menu?.classList.toggle('hidden');
+    iconOpen?.classList.toggle('hidden');
+    iconClose?.classList.toggle('hidden');
+    toggle.setAttribute('aria-expanded', String(!!isHidden));
+  });
+
+  menu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      menu.classList.add('hidden');
+      iconOpen?.classList.remove('hidden');
+      iconClose?.classList.add('hidden');
+    });
+  });
+</script>

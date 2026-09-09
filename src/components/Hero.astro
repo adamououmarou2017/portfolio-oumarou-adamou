@@ -1,0 +1,111 @@
+---
+import { Image } from 'astro:assets';
+import { useTranslations } from '../i18n/utils';
+import type { Lang } from '../i18n/ui';
+import photo from '../assets/oumarou-adamou.jpg';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const stats = [
+  { value: '7+', label: t('stats.years') },
+  { value: '200+', label: t('stats.reports') },
+  { value: '4 500+', label: t('stats.beneficiaries') },
+  { value: '6', label: t('stats.banks') },
+];
+---
+
+<section id="home" class="relative overflow-hidden">
+  <div
+    class="pointer-events-none absolute inset-0 -z-10"
+    style="background: radial-gradient(60% 50% at 80% -10%, color-mix(in srgb, var(--color-accent) 18%, transparent), transparent), radial-gradient(50% 40% at 0% 0%, color-mix(in srgb, var(--color-gold) 12%, transparent), transparent);"
+  >
+  </div>
+
+  <div class="mx-auto grid max-w-6xl gap-12 px-5 pb-16 pt-14 sm:px-8 sm:pt-20 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:pb-24 lg:pt-24">
+    <div>
+      <span class="inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent-soft px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-accent-strong">
+        <span class="h-1.5 w-1.5 rounded-full bg-accent"></span>
+        {t('hero.kicker')}
+      </span>
+
+      <h1 class="mt-6 font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-ink sm:text-5xl lg:text-6xl">
+        {t('hero.title_1')}<br />
+        <span class="text-accent">{t('hero.title_2')}</span>
+      </h1>
+
+      <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-soft">
+        {t('hero.subtitle')}
+      </p>
+
+      <div class="mt-8 flex flex-wrap items-center gap-4">
+        <a
+          href="#contact"
+          class="rounded-full bg-ink px-6 py-3.5 text-sm font-semibold text-paper shadow-lg shadow-ink/10 transition-transform hover:scale-[1.03]"
+        >
+          {t('hero.cta_primary')}
+        </a>
+        <a
+          href="#projects"
+          class="rounded-full border border-ink/15 px-6 py-3.5 text-sm font-semibold text-ink transition-colors hover:border-accent hover:text-accent"
+        >
+          {t('hero.cta_secondary')}
+        </a>
+      </div>
+
+      <p class="mt-6 flex items-center gap-2 text-sm text-ink-soft">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+        {t('hero.location')}
+      </p>
+    </div>
+
+    <div class="relative mx-auto flex w-full max-w-sm items-center justify-center py-6 lg:mx-0 lg:ml-auto">
+      <div class="absolute inset-0 -z-10 rounded-[2rem] bg-gradient-to-br from-accent/20 to-gold/15 blur-2xl"></div>
+
+      <div class="relative">
+        <div class="h-56 w-56 overflow-hidden rounded-full border-4 border-paper shadow-2xl shadow-ink/15 ring-1 ring-ink/5 sm:h-64 sm:w-64">
+          <Image
+            src={photo}
+            alt={t('hero.photo_alt')}
+            width={256}
+            height={256}
+            class="h-full w-full object-cover"
+          />
+        </div>
+
+        <div class="absolute -bottom-3 -right-6 rounded-2xl border border-ink/5 bg-paper px-4 py-3 text-left shadow-xl shadow-ink/10 sm:-right-10">
+          <p class="font-display text-xl font-extrabold leading-none text-accent-strong">7+</p>
+          <p class="mt-1 text-[11px] font-medium leading-tight text-ink-soft">{t('stats.years')}</p>
+        </div>
+
+        <div class="absolute -left-6 -top-3 grid h-12 w-12 place-items-center rounded-2xl border border-ink/5 bg-paper shadow-xl shadow-ink/10 sm:-left-8">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="4" y="12" width="3.5" height="8" rx="0.5" />
+            <rect x="10.25" y="7" width="3.5" height="13" rx="0.5" />
+            <rect x="16.5" y="4" width="3.5" height="16" rx="0.5" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="border-y border-ink/5 bg-paper-soft/70">
+    <div class="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-5 py-8 sm:px-8 md:grid-cols-4">
+      {
+        stats.map((s) => (
+          <div class="text-center">
+            <p class="font-display text-3xl font-extrabold text-ink sm:text-4xl">{s.value}</p>
+            <p class="mt-1 text-xs font-medium leading-snug text-ink-soft sm:text-sm">{s.label}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

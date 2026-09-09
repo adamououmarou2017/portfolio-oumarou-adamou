@@ -1,0 +1,31 @@
+---
+import { useTranslations } from '../i18n/utils';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-ink/5 bg-ink text-paper">
+  <div class="mx-auto flex max-w-6xl flex-col gap-6 px-5 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+    <div>
+      <p class="font-display text-lg font-bold">
+        Oumarou<span class="text-accent">.</span>Adamou
+      </p>
+      <p class="mt-1 text-sm text-paper/60">{t('footer.tagline')}</p>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-paper/70">
+      <a href="mailto:adamou.oumarou.2017@gmail.com" class="hover:text-accent">adamou.oumarou.2017@gmail.com</a>
+      <a href="tel:+22790160903" class="hover:text-accent">+227 90 16 09 03</a>
+    </div>
+  </div>
+  <div class="border-t border-paper/10 px-5 py-4 text-center text-xs text-paper/50 sm:px-8">
+    © {year} Oumarou Adamou — {t('footer.rights')}
+  </div>
+</footer>
